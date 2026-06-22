@@ -1,0 +1,68 @@
+import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { LoggerService } from '../common/logger/logger.service';
+import { DecodedSensorData, RawSensorFrame } from '../common/interfaces/sensor.interface';
+import { FrameDecoderService } from './frame-decoder.service';
+import { SimulatorService } from './simulator.service';
+export type SerialEvents = {
+    rawData: (buf: Buffer) => void;
+    frameDecoded: (frame: RawSensorFrame | DecodedSensorData) => void;
+    error: (err: Error) => void;
+    open: () => void;
+    close: () => void;
+    reconnect: (attempt: number) => void;
+};
+declare const SerialService_base: new () => {
+    on<K extends keyof SerialEvents>(event: K, listener: SerialEvents[K]): unknown;
+    once<K extends keyof SerialEvents>(event: K, listener: SerialEvents[K]): unknown;
+    off<K extends keyof SerialEvents>(event: K, listener: SerialEvents[K]): unknown;
+    removeAllListeners<K extends keyof SerialEvents>(event?: K): unknown;
+    emit<K extends keyof SerialEvents>(event: K, ...args: Parameters<SerialEvents[K]>): boolean;
+};
+export declare class SerialService extends SerialService_base implements OnModuleInit, OnModuleDestroy {
+    private readonly logger;
+    private readonly frameDecoder;
+    private readonly simulator;
+    private isOpen;
+    private useSimulator;
+    private frameCounter;
+    private byteCounter;
+    private startedAt?;
+    private destroyed;
+    private port;
+    private portPath;
+    private baudRate;
+    private reconnectAttempts;
+    private reconnectTimer?;
+    private reconnecting;
+    private boundHandleData;
+    private boundHandleError;
+    private boundHandleOpen;
+    private boundHandleClose;
+    private boundSimulatorData;
+    constructor(logger: LoggerService, frameDecoder: FrameDecoderService, simulator: SimulatorService);
+    onModuleInit(): Promise<void>;
+    onModuleDestroy(): Promise<void>;
+    private attachSimulator;
+    private detachSimulator;
+    private openRealSerialPort;
+    private destroyPort;
+    private handlePortOpen;
+    private handlePortClose;
+    private scheduleReconnect;
+    private switchToSimulator;
+    private handleIncomingData;
+    private handleError;
+    getStatus(): {
+        isOpen: boolean;
+        mode: string;
+        frameCount: number;
+        byteCount: number;
+        frameRateFps: number;
+        frameSizeBytes: number;
+        uptimeSec: number;
+        reconnectAttempts: number;
+        reconnecting: boolean;
+    };
+    sendCommand(commandBuffer: Buffer): Promise<boolean>;
+}
+export {};

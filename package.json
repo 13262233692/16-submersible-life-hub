@@ -1,0 +1,31 @@
+{
+  "name": "submersible-life-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "万米级深海载人潜水器生命维持状态监测与主动配气控制中枢",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install --workspace=server && npm install --workspace=client",
+    "dev:server": "npm run start:dev --workspace=server",
+    "dev:client": "npm run dev --workspace=client",
+    "build:server": "npm run build --workspace=server",
+    "build:client": "npm run build --workspace=client",
+    "start:all": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+  },
+  "keywords": [
+    "submersible",
+    "life-support",
+    "nestjs",
+    "react",
+    "webgl",
+    "rs485"
+  ],
+  "author": "Deep Sea Life Support Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
