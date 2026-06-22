@@ -7,6 +7,9 @@ import { SensorAggregatorService } from './sensor-aggregator.service';
 import { DiffusionGridService } from './diffusion-grid.service';
 import { SensorType } from '../common/interfaces/sensor.interface';
 import { BiochemicalState, GasDiffusionGrid } from '../common/interfaces/biochemical.interface';
+import { AcuteCo2Alert } from '../common/interfaces/auricular.interface';
+import { MetabolicLstmService } from '../metabolic/metabolic-lstm.service';
+import { AcuteInterventionService } from '../metabolic/acute-intervention.service';
 export interface EngineDiagnostics {
     computeLatencyMs: number;
     avgLatencyMs: number;
@@ -22,6 +25,8 @@ export declare class BiochemicalEngineService implements OnModuleInit, OnModuleD
     private readonly ringBuffer;
     private readonly aggregator;
     private readonly diffusion;
+    private readonly metabolicLstm;
+    private readonly acuteIntervention;
     private runLoop?;
     private gridLoop?;
     private lastState?;
@@ -37,7 +42,8 @@ export declare class BiochemicalEngineService implements OnModuleInit, OnModuleD
     private adaptiveThrottleEnabled;
     private skippedGridTicks;
     private totalSkippedGrids;
-    constructor(logger: LoggerService, serial: SerialService, kalman: MultiChannelKalmanFilter, ringBuffer: LockFreeRingBuffer<FilteredSensorReading>, aggregator: SensorAggregatorService, diffusion: DiffusionGridService);
+    private alertListeners;
+    constructor(logger: LoggerService, serial: SerialService, kalman: MultiChannelKalmanFilter, ringBuffer: LockFreeRingBuffer<FilteredSensorReading>, aggregator: SensorAggregatorService, diffusion: DiffusionGridService, metabolicLstm: MetabolicLstmService, acuteIntervention: AcuteInterventionService);
     onModuleInit(): void;
     onModuleDestroy(): void;
     private scheduleComputeLoop;
@@ -47,6 +53,7 @@ export declare class BiochemicalEngineService implements OnModuleInit, OnModuleD
     private gridTick;
     onBiochemicalState(listener: (s: BiochemicalState) => void): () => void;
     onDiffusionGrid(listener: (g: GasDiffusionGrid) => void): () => void;
+    onAcuteCo2Alert(listener: (a: AcuteCo2Alert) => void): () => void;
     getCurrentState(): BiochemicalState | null;
     getCurrentGrid(): GasDiffusionGrid | null;
     getDiagnostics(): EngineDiagnostics;
@@ -85,4 +92,8 @@ export declare class BiochemicalEngineService implements OnModuleInit, OnModuleD
         humiditySamples: number;
     };
     getLatestReadings(): Record<string, FilteredSensorReading | null>;
+    private onVitalSigns;
+    getRecentAlerts(limit?: number): AcuteCo2Alert[];
+    acknowledgeAlert(alertId: string): boolean;
+    triggerTestCrisis(diverId?: number): void;
 }

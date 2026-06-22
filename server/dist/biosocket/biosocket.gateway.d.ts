@@ -61,6 +61,25 @@ export declare class BiosocketGateway implements OnGatewayInit, OnGatewayConnect
     private getAverageQueueDepth;
     isBackpressured(): boolean;
     getBackpressureStats(): BackpressureStats;
+    private broadcastAlert;
+    handleAlertAck(data: {
+        alertId: string;
+    }): {
+        ok: boolean;
+        alertId: string;
+    };
+    handleAlertList(data?: {
+        limit?: number;
+    }): {
+        ok: boolean;
+        alerts: import("../common/interfaces/auricular.interface").AcuteCo2Alert[];
+    };
+    handleTriggerCrisis(data?: {
+        diverId?: number;
+    }): {
+        ok: boolean;
+        at: number;
+    };
     handleSubscribeConfig(client: Socket, config: Partial<ClientSubscription>): {
         ok: boolean;
         error: string;

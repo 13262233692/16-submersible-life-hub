@@ -7,6 +7,8 @@ import { DisplayControls } from './components/DisplayControls';
 import { GasControlPanel } from './components/GasControlPanel';
 import { ColorLegend } from './components/ColorLegend';
 import { TelemetryPanel } from './components/TelemetryPanel';
+import { LifeSupportAlertBorder } from './components/LifeSupportAlertBorder';
+import { Co2DiagnosisModal } from './components/Co2DiagnosisModal';
 import { createBioSocket } from './services/biosocket';
 
 export default function App() {
@@ -18,7 +20,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col gap-2.5 p-3 text-white">
+    <div className="w-full h-full flex flex-col gap-2.5 p-3 text-white relative">
+      <LifeSupportAlertBorder />
+      <Co2DiagnosisModal />
       <div className="shrink-0">
         <div className="flex items-center justify-between gap-4 mb-2">
           <TopHeader />

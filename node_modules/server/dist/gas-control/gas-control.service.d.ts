@@ -1,11 +1,11 @@
 import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { LoggerService } from '../common/logger/logger.service';
 import { ValveControlCommand, ValveStatusReport, MasterControlReport, ValveId, ValveAction, CommandPriority } from '../common/interfaces/gas-control.interface';
-import { BiochemicalEngineService } from '../biochemical/biochemical-engine.service';
 import { MasterControlReporter } from './master-control-reporter.service';
 export declare class GasControlService implements OnModuleInit, OnModuleDestroy {
     private readonly logger;
-    private readonly engine;
+    private readonly moduleRef;
     private readonly reporter;
     private controlLoop?;
     private valveStates;
@@ -17,7 +17,9 @@ export declare class GasControlService implements OnModuleInit, OnModuleDestroy 
     private commandCounter;
     private manualOverride;
     private lastControlCycle;
-    constructor(logger: LoggerService, engine: BiochemicalEngineService, reporter: MasterControlReporter);
+    private _engine?;
+    constructor(logger: LoggerService, moduleRef: ModuleRef, reporter: MasterControlReporter);
+    private get engine();
     onModuleInit(): void;
     onModuleDestroy(): void;
     private initializeValves;

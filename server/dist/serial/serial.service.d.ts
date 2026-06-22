@@ -1,15 +1,23 @@
 import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { LoggerService } from '../common/logger/logger.service';
 import { DecodedSensorData, RawSensorFrame } from '../common/interfaces/sensor.interface';
+import { AuricularRawFrame, DecodedAuricularData, VitalSignsSample } from '../common/interfaces/auricular.interface';
 import { FrameDecoderService } from './frame-decoder.service';
+import { AuricularDecoderService } from './auricular-decoder.service';
 import { SimulatorService } from './simulator.service';
 export type SerialEvents = {
     rawData: (buf: Buffer) => void;
     frameDecoded: (frame: RawSensorFrame | DecodedSensorData) => void;
+    auricularFrame: (frame: AuricularRawFrame | DecodedAuricularData | VitalSignsSample) => void;
+    vitalSigns: (sample: VitalSignsSample) => void;
     error: (err: Error) => void;
     open: () => void;
     close: () => void;
     reconnect: (attempt: number) => void;
+    crisis: (data: {
+        timestamp: number;
+        type: string;
+    }) => void;
 };
 declare const SerialService_base: new () => {
     on<K extends keyof SerialEvents>(event: K, listener: SerialEvents[K]): unknown;
@@ -21,6 +29,7 @@ declare const SerialService_base: new () => {
 export declare class SerialService extends SerialService_base implements OnModuleInit, OnModuleDestroy {
     private readonly logger;
     private readonly frameDecoder;
+    private readonly auricularDecoder;
     private readonly simulator;
     private isOpen;
     private useSimulator;
@@ -39,7 +48,7 @@ export declare class SerialService extends SerialService_base implements OnModul
     private boundHandleOpen;
     private boundHandleClose;
     private boundSimulatorData;
-    constructor(logger: LoggerService, frameDecoder: FrameDecoderService, simulator: SimulatorService);
+    constructor(logger: LoggerService, frameDecoder: FrameDecoderService, auricularDecoder: AuricularDecoderService, simulator: SimulatorService);
     onModuleInit(): Promise<void>;
     onModuleDestroy(): Promise<void>;
     private attachSimulator;

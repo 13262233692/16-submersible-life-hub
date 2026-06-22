@@ -112,3 +112,124 @@
 2026-06-22 10:18:48.646 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 90000 帧 / 540000 字节 @ 483.9 fps / 2.84 KB/s
 2026-06-22 10:19:09.690 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 100000 帧 / 600000 字节 @ 483.0 fps / 2.83 KB/s
 2026-06-22 10:19:30.746 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 110000 帧 / 660000 字节 @ 482.3 fps / 2.83 KB/s
+2026-06-22 10:19:50.850 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 120000 帧 / 720000 字节 @ 483.5 fps / 2.83 KB/s
+2026-06-22 10:20:11.069 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 130000 帧 / 780000 字节 @ 484.3 fps / 2.84 KB/s
+2026-06-22 10:20:31.509 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 140000 帧 / 840000 字节 @ 484.7 fps / 2.84 KB/s
+2026-06-22 10:20:51.450 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 150000 帧 / 900000 字节 @ 485.8 fps / 2.85 KB/s
+2026-06-22 10:21:11.415 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 160000 帧 / 960000 字节 @ 486.7 fps / 2.85 KB/s
+2026-06-22 10:21:31.819 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 170000 帧 / 1020000 字节 @ 486.9 fps / 2.85 KB/s
+2026-06-22 10:21:52.242 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 180000 帧 / 1080000 字节 @ 487.0 fps / 2.85 KB/s
+2026-06-22 10:22:12.380 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 190000 帧 / 1140000 字节 @ 487.5 fps / 2.86 KB/s
+2026-06-22 10:22:32.169 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 200000 帧 / 1200000 字节 @ 488.4 fps / 2.86 KB/s
+2026-06-22 10:22:51.939 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 210000 帧 / 1260000 字节 @ 489.2 fps / 2.87 KB/s
+2026-06-22 10:23:11.634 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 220000 帧 / 1320000 字节 @ 490.0 fps / 2.87 KB/s
+2026-06-22 10:23:31.448 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 230000 帧 / 1380000 字节 @ 490.6 fps / 2.87 KB/s
+2026-06-22 10:23:51.409 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 240000 帧 / 1440000 字节 @ 491.1 fps / 2.88 KB/s
+2026-06-22 10:24:11.478 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 250000 帧 / 1500000 字节 @ 491.3 fps / 2.88 KB/s
+2026-06-22 10:24:31.344 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 260000 帧 / 1560000 字节 @ 491.8 fps / 2.88 KB/s
+2026-06-22 10:24:51.114 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 270000 帧 / 1620000 字节 @ 492.3 fps / 2.88 KB/s
+2026-06-22 10:25:10.891 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 280000 帧 / 1680000 字节 @ 492.8 fps / 2.89 KB/s
+2026-06-22 10:25:30.675 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 290000 帧 / 1740000 字节 @ 493.2 fps / 2.89 KB/s
+2026-06-22 10:25:50.493 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 300000 帧 / 1800000 字节 @ 493.6 fps / 2.89 KB/s
+2026-06-22 10:26:10.313 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 310000 帧 / 1860000 字节 @ 493.9 fps / 2.89 KB/s
+2026-06-22 10:26:30.513 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 320000 帧 / 1920000 字节 @ 493.9 fps / 2.89 KB/s
+2026-06-22 10:26:50.366 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 330000 帧 / 1980000 字节 @ 494.2 fps / 2.90 KB/s
+2026-06-22 10:27:10.095 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 340000 帧 / 2040000 字节 @ 494.6 fps / 2.90 KB/s
+2026-06-22 10:27:29.955 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 350000 帧 / 2100000 字节 @ 494.8 fps / 2.90 KB/s
+2026-06-22 10:27:49.786 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 360000 帧 / 2160000 字节 @ 495.1 fps / 2.90 KB/s
+2026-06-22 10:28:09.598 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 370000 帧 / 2220000 字节 @ 495.4 fps / 2.90 KB/s
+2026-06-22 10:28:29.668 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 380000 帧 / 2280000 字节 @ 495.4 fps / 2.90 KB/s
+2026-06-22 10:28:49.661 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 390000 帧 / 2340000 字节 @ 495.6 fps / 2.90 KB/s
+2026-06-22 10:29:09.883 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 400000 帧 / 2400000 字节 @ 495.5 fps / 2.90 KB/s
+2026-06-22 10:29:29.810 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 410000 帧 / 2460000 字节 @ 495.7 fps / 2.90 KB/s
+2026-06-22 10:29:49.657 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 420000 帧 / 2520000 字节 @ 495.9 fps / 2.91 KB/s
+2026-06-22 10:30:09.463 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 430000 帧 / 2580000 字节 @ 496.1 fps / 2.91 KB/s
+2026-06-22 10:30:29.217 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 440000 帧 / 2640000 字节 @ 496.3 fps / 2.91 KB/s
+2026-06-22 10:30:49.036 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 450000 帧 / 2700000 字节 @ 496.5 fps / 2.91 KB/s
+2026-06-22 10:31:08.806 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 460000 帧 / 2760000 字节 @ 496.7 fps / 2.91 KB/s
+2026-06-22 10:31:28.613 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 470000 帧 / 2820000 字节 @ 496.9 fps / 2.91 KB/s
+2026-06-22 10:31:48.834 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 480000 帧 / 2880000 字节 @ 496.8 fps / 2.91 KB/s
+2026-06-22 10:32:08.910 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 490000 帧 / 2940000 字节 @ 496.8 fps / 2.91 KB/s
+2026-06-22 10:32:29.232 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 500000 帧 / 3000000 字节 @ 496.7 fps / 2.91 KB/s
+2026-06-22 10:32:49.100 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 510000 帧 / 3060000 字节 @ 496.9 fps / 2.91 KB/s
+2026-06-22 10:33:09.030 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 520000 帧 / 3120000 字节 @ 497.0 fps / 2.91 KB/s
+2026-06-22 10:33:28.849 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 530000 帧 / 3180000 字节 @ 497.1 fps / 2.91 KB/s
+2026-06-22 10:33:48.765 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 540000 帧 / 3240000 字节 @ 497.2 fps / 2.91 KB/s
+2026-06-22 10:34:08.603 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 550000 帧 / 3300000 字节 @ 497.3 fps / 2.91 KB/s
+2026-06-22 10:34:28.436 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 560000 帧 / 3360000 字节 @ 497.4 fps / 2.91 KB/s
+2026-06-22 10:34:48.472 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 570000 帧 / 3420000 字节 @ 497.5 fps / 2.91 KB/s
+2026-06-22 10:35:08.435 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 580000 帧 / 3480000 字节 @ 497.5 fps / 2.92 KB/s
+2026-06-22 10:35:28.075 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 590000 帧 / 3540000 字节 @ 497.7 fps / 2.92 KB/s
+2026-06-22 10:35:47.926 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 600000 帧 / 3600000 字节 @ 497.8 fps / 2.92 KB/s
+2026-06-22 10:36:07.689 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 610000 帧 / 3660000 字节 @ 497.9 fps / 2.92 KB/s
+2026-06-22 10:36:27.491 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 620000 帧 / 3720000 字节 @ 498.1 fps / 2.92 KB/s
+2026-06-22 10:36:47.215 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 630000 帧 / 3780000 字节 @ 498.2 fps / 2.92 KB/s
+2026-06-22 10:37:07.029 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 640000 帧 / 3840000 字节 @ 498.3 fps / 2.92 KB/s
+2026-06-22 10:37:26.845 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 650000 帧 / 3900000 字节 @ 498.4 fps / 2.92 KB/s
+2026-06-22 10:37:46.817 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 660000 帧 / 3960000 字节 @ 498.4 fps / 2.92 KB/s
+2026-06-22 10:38:06.580 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 670000 帧 / 4020000 字节 @ 498.5 fps / 2.92 KB/s
+2026-06-22 10:38:26.384 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 680000 帧 / 4080000 字节 @ 498.6 fps / 2.92 KB/s
+2026-06-22 10:38:46.280 [[34mdebug[39m][SensorAggregator] 帧吞吐统计: 690000 帧 / 4140000 字节 @ 498.7 fps / 2.92 KB/s
+2026-06-22 10:58:23.245 [[32minfo[39m][Metabolic-LSTM] 轻量化 LSTM 代谢推演器已初始化: 窗口=60s, 隐含层=16, 预测=300s
+2026-06-22 10:58:23.695 [[32minfo[39m][Biosocket-WS] WebSocket 通道已建立: /biostream
+2026-06-22 10:58:23.696 [[32minfo[39m][Biosocket-WS] 背压看门狗配置: stateQ=16, gridQ=8, 慢客户端逐出=15000ms
+2026-06-22 10:58:23.700 [[32minfo[39m][Biosocket-WS] 生化计算引擎初始化完成，启动数据管线...
+2026-06-22 10:58:23.702 [[32minfo[39m][DiffusionGrid] 流体扩散网格初始化: 64x64 = 4096 格点
+2026-06-22 10:58:23.703 [[32minfo[39m][SensorAggregator] RS-485 驱动初始化: 模式=仿真数据
+2026-06-22 10:58:23.703 [[32minfo[39m][SensorAggregator] 主动配气控制模块已启动 - PID控制循环: 5Hz
+2026-06-22 10:58:23.704 [[32minfo[39m][KalmanFilter] 多通道卡尔曼滤波器已初始化 (5 通道)
+2026-06-22 10:58:23.704 [[32minfo[39m][RingBuffer] 无锁环形缓冲初始化: 容量=65536 槽 (64K), 单槽对齐=8 字节边界
+2026-06-22 10:58:23.704 [[32minfo[39m][RingBuffer] 急性 CO2 中毒超前干预模块已就绪: 临界线=0.025bar, 预警线=0.018bar, 冷却=30s
+2026-06-22 10:58:23.707 [[32minfo[39m][NestFactory] Starting Nest application...
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] SharedModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] LoggerModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] AppModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] SerialModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] KalmanFilterModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] RingBufferModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] GasControlModule dependencies initialized
+2026-06-22 10:58:23.708 [[32minfo[39m][InstanceLoader] MetabolicModule dependencies initialized
+2026-06-22 10:58:23.709 [[32minfo[39m][InstanceLoader] BiochemicalModule dependencies initialized
+2026-06-22 10:58:23.709 [[32minfo[39m][InstanceLoader] ApiModule dependencies initialized
+2026-06-22 10:58:23.709 [[32minfo[39m][InstanceLoader] BiosocketModule dependencies initialized
+2026-06-22 10:58:23.709 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "alert:acknowledge" message
+2026-06-22 10:58:23.709 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "alert:list" message
+2026-06-22 10:58:23.710 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "diagnostics:trigger_crisis" message
+2026-06-22 10:58:23.710 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "subscribe:config" message
+2026-06-22 10:58:23.710 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "request:state" message
+2026-06-22 10:58:23.710 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "request:grid" message
+2026-06-22 10:58:23.710 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "control:valve" message
+2026-06-22 10:58:23.710 [[32minfo[39m][WebSocketsController] BiosocketGateway subscribed to the "control:override" message
+2026-06-22 10:58:23.711 [[32minfo[39m][RoutesResolver] AppController {/}:
+2026-06-22 10:58:23.711 [[32minfo[39m][RouterExplorer] Mapped {/health, GET} route
+2026-06-22 10:58:23.711 [[32minfo[39m][RouterExplorer] Mapped {/system-info, GET} route
+2026-06-22 10:58:23.711 [[32minfo[39m][RoutesResolver] BiochemicalController {/api/biochemical}:
+2026-06-22 10:58:23.711 [[32minfo[39m][RouterExplorer] Mapped {/api/biochemical/state, GET} route
+2026-06-22 10:58:23.711 [[32minfo[39m][RouterExplorer] Mapped {/api/biochemical/grid, GET} route
+2026-06-22 10:58:23.711 [[32minfo[39m][RouterExplorer] Mapped {/api/biochemical/grid/compact, GET} route
+2026-06-22 10:58:23.711 [[32minfo[39m][RoutesResolver] SensorController {/api/sensors}:
+2026-06-22 10:58:23.711 [[32minfo[39m][RouterExplorer] Mapped {/api/sensors/kalman/channels, GET} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/sensors/kalman/:sensorType, GET} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/sensors/ringbuffer, GET} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/sensors/aggregator, GET} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RoutesResolver] ControlController {/api/control}:
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/control/valves, GET} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/control/valves/:valveId, GET} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/control/valves/:valveId/command, POST} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/control/override, POST} route
+2026-06-22 10:58:23.712 [[32minfo[39m][RouterExplorer] Mapped {/api/control/pid, GET} route
+2026-06-22 10:58:23.713 [[32minfo[39m][RouterExplorer] Mapped {/api/control/master-report, GET} route
+2026-06-22 10:58:23.713 [[32minfo[39m][RoutesResolver] DiagnosticsController {/api/diagnostics}:
+2026-06-22 10:58:23.713 [[32minfo[39m][RouterExplorer] Mapped {/api/diagnostics/engine, GET} route
+2026-06-22 10:58:23.713 [[32minfo[39m][RouterExplorer] Mapped {/api/diagnostics/serial, GET} route
+2026-06-22 10:58:23.713 [[32minfo[39m][RouterExplorer] Mapped {/api/diagnostics/full, GET} route
+2026-06-22 10:58:23.713 [[32minfo[39m][NestApplication] Nest application successfully started
+2026-06-22 10:58:23.714 [[32minfo[39m][RingBuffer] 🚀 生命维持中枢服务已启动: http://localhost:3001
+2026-06-22 10:58:23.714 [[32minfo[39m][RingBuffer] 📖 API 文档地址: http://localhost:3001/api/docs
+2026-06-22 10:58:23.714 [[32minfo[39m][RingBuffer] 🔌 WebSocket 通道: ws://localhost:3001/biostream
+2026-06-22 10:58:31.355 [[34mdebug[39m][RingBuffer] 帧吞吐统计: 10000 帧 / 72448 字节 @ 1306.8 fps / 9.25 KB/s
+2026-06-22 10:58:48.145 [[34mdebug[39m][RingBuffer] 帧吞吐统计: 30000 帧 / 217312 字节 @ 1227.4 fps / 8.68 KB/s
+2026-06-22 10:58:56.671 [[34mdebug[39m][RingBuffer] 帧吞吐统计: 40000 帧 / 289736 字节 @ 1213.3 fps / 8.58 KB/s
+2026-06-22 10:59:04.583 [[34mdebug[39m][RingBuffer] 帧吞吐统计: 50000 帧 / 362112 字节 @ 1223.1 fps / 8.65 KB/s
+2026-06-22 10:59:12.334 [[34mdebug[39m][RingBuffer] 帧吞吐统计: 60000 帧 / 434496 字节 @ 1233.8 fps / 8.73 KB/s
+2026-06-22 10:59:19.817 [[34mdebug[39m][RingBuffer] 帧吞吐统计: 70000 帧 / 507048 字节 @ 1247.5 fps / 8.82 KB/s

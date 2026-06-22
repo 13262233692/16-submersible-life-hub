@@ -10,6 +10,7 @@ import { GasControlModule } from './gas-control/gas-control.module';
 import { BiosocketModule } from './biosocket/biosocket.module';
 import { ApiModule } from './api/api.module';
 import { SharedModule } from './common/shared/shared.module';
+import { MetabolicModule } from './metabolic/metabolic.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SharedModule } from './common/shared/shared.module';
     RingBufferModule,
     BiochemicalModule,
     GasControlModule,
+    MetabolicModule,
     BiosocketModule,
     ApiModule,
   ],

@@ -83,6 +83,43 @@ export interface PIDState {
 
 export type DisplayMode = 'o2' | 'co2' | 'flow' | 'combined';
 
+export type AlertSeverity = 'info' | 'warning' | 'critical' | 'fatal';
+
+export interface LSTMPrediction {
+  timestamp: number;
+  predictedCo2Bar5Min: number;
+  predictedCo2Bar10Min: number;
+  predictedO2Kpa5Min: number;
+  confidence: number;
+  horizonSeconds: number;
+  anomalyScore: number;
+  nonlinearityIndex: number;
+}
+
+export interface MetabolicGradient {
+  o2ConsumptionDelta: number;
+  co2ProductionDelta: number;
+  pulseDelta: number;
+  spo2Delta: number;
+  timestamp: number;
+  windowSeconds: number;
+}
+
+export interface AcuteCo2Alert {
+  alertId: string;
+  timestamp: number;
+  severity: AlertSeverity;
+  title: string;
+  message: string;
+  triggeringDiverId: number;
+  lstmPrediction: LSTMPrediction;
+  gradient: MetabolicGradient;
+  interventionCommands: string[];
+  co2CriticalBar: number;
+  timeToBreachSec: number;
+  acknowledged: boolean;
+}
+
 export interface ConnectionStatus {
   connected: boolean;
   latencyMs: number;

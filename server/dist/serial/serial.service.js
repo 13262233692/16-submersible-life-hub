@@ -15,6 +15,7 @@ const events_1 = require("events");
 const logger_service_1 = require("../common/logger/logger.service");
 const sensor_interface_1 = require("../common/interfaces/sensor.interface");
 const frame_decoder_service_1 = require("./frame-decoder.service");
+const auricular_decoder_service_1 = require("./auricular-decoder.service");
 const simulator_service_1 = require("./simulator.service");
 const RECONNECT = {
     INITIAL_DELAY_MS: 500,
@@ -25,6 +26,7 @@ const RECONNECT = {
 let SerialService = class SerialService extends events_1.EventEmitter {
     logger;
     frameDecoder;
+    auricularDecoder;
     simulator;
     isOpen = false;
     useSimulator = true;
@@ -43,10 +45,11 @@ let SerialService = class SerialService extends events_1.EventEmitter {
     boundHandleOpen;
     boundHandleClose;
     boundSimulatorData;
-    constructor(logger, frameDecoder, simulator) {
+    constructor(logger, frameDecoder, auricularDecoder, simulator) {
         super();
         this.logger = logger;
         this.frameDecoder = frameDecoder;
+        this.auricularDecoder = auricularDecoder;
         this.simulator = simulator;
         this.logger.setContext('Serial485');
         this.boundHandleData = (buf) => this.handleIncomingData(buf);
@@ -89,10 +92,12 @@ let SerialService = class SerialService extends events_1.EventEmitter {
     }
     attachSimulator() {
         this.simulator.on('data', this.boundSimulatorData);
+        this.simulator.on('crisis:start', (d) => this.emit('crisis', d));
     }
     detachSimulator() {
         try {
             this.simulator.off('data', this.boundSimulatorData);
+            this.simulator.removeAllListeners('crisis:start');
         }
         catch {
         }
@@ -235,6 +240,14 @@ let SerialService = class SerialService extends events_1.EventEmitter {
             frameAny.frameId = this.frameCounter;
             this.emit('frameDecoded', frame);
         }
+        const auricularFrames = this.auricularDecoder.consumeBuffer(buffer);
+        for (const frame of auricularFrames) {
+            this.frameCounter++;
+            this.emit('auricularFrame', frame);
+            if ('pulseBpm' in frame && 'spo2Percent' in frame) {
+                this.emit('vitalSigns', frame);
+            }
+        }
         if (this.frameCounter % 10000 === 0) {
             const elapsed = (Date.now() - (this.startedAt || Date.now())) / 1000;
             this.logger.debug(`帧吞吐统计: ${this.frameCounter} 帧 / ${this.byteCounter} 字节 ` +
@@ -301,6 +314,7 @@ exports.SerialService = SerialService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [logger_service_1.LoggerService,
         frame_decoder_service_1.FrameDecoderService,
+        auricular_decoder_service_1.AuricularDecoderService,
         simulator_service_1.SimulatorService])
 ], SerialService);
 //# sourceMappingURL=serial.service.js.map

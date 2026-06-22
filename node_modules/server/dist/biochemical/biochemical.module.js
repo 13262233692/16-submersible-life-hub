@@ -11,12 +11,14 @@ const common_1 = require("@nestjs/common");
 const biochemical_engine_service_1 = require("./biochemical-engine.service");
 const diffusion_grid_service_1 = require("./diffusion-grid.service");
 const sensor_aggregator_service_1 = require("./sensor-aggregator.service");
+const gas_control_module_1 = require("../gas-control/gas-control.module");
 let BiochemicalModule = class BiochemicalModule {
 };
 exports.BiochemicalModule = BiochemicalModule;
 exports.BiochemicalModule = BiochemicalModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
+        imports: [(0, common_1.forwardRef)(() => gas_control_module_1.GasControlModule)],
         providers: [biochemical_engine_service_1.BiochemicalEngineService, diffusion_grid_service_1.DiffusionGridService, sensor_aggregator_service_1.SensorAggregatorService],
         exports: [biochemical_engine_service_1.BiochemicalEngineService, diffusion_grid_service_1.DiffusionGridService, sensor_aggregator_service_1.SensorAggregatorService],
     })

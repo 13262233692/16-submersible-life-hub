@@ -10,6 +10,7 @@ exports.SerialModule = void 0;
 const common_1 = require("@nestjs/common");
 const serial_service_1 = require("./serial.service");
 const frame_decoder_service_1 = require("./frame-decoder.service");
+const auricular_decoder_service_1 = require("./auricular-decoder.service");
 const simulator_service_1 = require("./simulator.service");
 let SerialModule = class SerialModule {
 };
@@ -17,8 +18,8 @@ exports.SerialModule = SerialModule;
 exports.SerialModule = SerialModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
-        providers: [serial_service_1.SerialService, frame_decoder_service_1.FrameDecoderService, simulator_service_1.SimulatorService],
-        exports: [serial_service_1.SerialService, frame_decoder_service_1.FrameDecoderService, simulator_service_1.SimulatorService],
+        providers: [serial_service_1.SerialService, frame_decoder_service_1.FrameDecoderService, auricular_decoder_service_1.AuricularDecoderService, simulator_service_1.SimulatorService],
+        exports: [serial_service_1.SerialService, frame_decoder_service_1.FrameDecoderService, auricular_decoder_service_1.AuricularDecoderService, simulator_service_1.SimulatorService],
     })
 ], SerialModule);
 //# sourceMappingURL=serial.module.js.map

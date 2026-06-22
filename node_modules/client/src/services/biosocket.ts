@@ -1,12 +1,14 @@
 import { io, Socket } from 'socket.io-client';
 import { useLifeHubStore } from '../store/store';
-import type { BiochemicalState, DiffusionGridPayload, TelemetryPayload } from '../types';
+import type { BiochemicalState, DiffusionGridPayload, TelemetryPayload, AcuteCo2Alert } from '../types';
 
 type EventMap = {
   welcome: (data: { serverTime: number; suggestedThrottleMs: number }) => void;
   'biochemical:state': (state: BiochemicalState) => void;
   'diffusion:grid': (grid: DiffusionGridPayload) => void;
   telemetry: (t: TelemetryPayload) => void;
+  'alert:acute_co2': (a: AcuteCo2Alert) => void;
+  'alert:acknowledged': (data: { alertId: string; at: number }) => void;
   connect: () => void;
   disconnect: () => void;
   connect_error: () => void;
@@ -66,6 +68,14 @@ export function createBioSocket(): Socket<EventMap> {
 
   socket.on('telemetry', (t) => {
     useLifeHubStore.getState().setTelemetry(t);
+  });
+
+  socket.on('alert:acute_co2', (a) => {
+    useLifeHubStore.getState().pushAcuteAlert(a);
+  });
+
+  socket.on('alert:acknowledged', (data) => {
+    useLifeHubStore.getState().acknowledgeAlert(data.alertId);
   });
 
   socketInstance = socket;

@@ -10,12 +10,14 @@ exports.GasControlModule = void 0;
 const common_1 = require("@nestjs/common");
 const gas_control_service_1 = require("./gas-control.service");
 const master_control_reporter_service_1 = require("./master-control-reporter.service");
+const biochemical_module_1 = require("../biochemical/biochemical.module");
 let GasControlModule = class GasControlModule {
 };
 exports.GasControlModule = GasControlModule;
 exports.GasControlModule = GasControlModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
+        imports: [(0, common_1.forwardRef)(() => biochemical_module_1.BiochemicalModule)],
         providers: [gas_control_service_1.GasControlService, master_control_reporter_service_1.MasterControlReporter],
         exports: [gas_control_service_1.GasControlService, master_control_reporter_service_1.MasterControlReporter],
     })

@@ -18,6 +18,8 @@ const lock_free_ring_buffer_service_1 = require("../ring-buffer/lock-free-ring-b
 const sensor_aggregator_service_1 = require("./sensor-aggregator.service");
 const diffusion_grid_service_1 = require("./diffusion-grid.service");
 const sensor_interface_1 = require("../common/interfaces/sensor.interface");
+const metabolic_lstm_service_1 = require("../metabolic/metabolic-lstm.service");
+const acute_intervention_service_1 = require("../metabolic/acute-intervention.service");
 let BiochemicalEngineService = class BiochemicalEngineService {
     logger;
     serial;
@@ -25,6 +27,8 @@ let BiochemicalEngineService = class BiochemicalEngineService {
     ringBuffer;
     aggregator;
     diffusion;
+    metabolicLstm;
+    acuteIntervention;
     runLoop;
     gridLoop;
     lastState;
@@ -47,13 +51,16 @@ let BiochemicalEngineService = class BiochemicalEngineService {
     adaptiveThrottleEnabled = true;
     skippedGridTicks = 0;
     totalSkippedGrids = 0;
-    constructor(logger, serial, kalman, ringBuffer, aggregator, diffusion) {
+    alertListeners = [];
+    constructor(logger, serial, kalman, ringBuffer, aggregator, diffusion, metabolicLstm, acuteIntervention) {
         this.logger = logger;
         this.serial = serial;
         this.kalman = kalman;
         this.ringBuffer = ringBuffer;
         this.aggregator = aggregator;
         this.diffusion = diffusion;
+        this.metabolicLstm = metabolicLstm;
+        this.acuteIntervention = acuteIntervention;
         this.logger.setContext('BiochemicalEngine');
     }
     onModuleInit() {
@@ -61,6 +68,17 @@ let BiochemicalEngineService = class BiochemicalEngineService {
         this.serial.on('frameDecoded', (frame) => {
             if ('sensorType' in frame && 'unit' in frame) {
                 this.onSensorFrame(frame);
+            }
+        });
+        this.serial.on('vitalSigns', (sample) => {
+            this.onVitalSigns(sample);
+        });
+        this.acuteIntervention.on('alert', (alert) => {
+            for (const l of this.alertListeners) {
+                try {
+                    l(alert);
+                }
+                catch { }
             }
         });
         this.scheduleComputeLoop();
@@ -178,6 +196,14 @@ let BiochemicalEngineService = class BiochemicalEngineService {
                 this.gridListeners.splice(idx, 1);
         };
     }
+    onAcuteCo2Alert(listener) {
+        this.alertListeners.push(listener);
+        return () => {
+            const idx = this.alertListeners.indexOf(listener);
+            if (idx >= 0)
+                this.alertListeners.splice(idx, 1);
+        };
+    }
     getCurrentState() {
         return this.lastState || null;
     }
@@ -230,6 +256,32 @@ let BiochemicalEngineService = class BiochemicalEngineService {
         void sensor_interface_1.SensorType;
         return {};
     }
+    onVitalSigns(sample) {
+        if (!this.lastState)
+            return;
+        try {
+            const prediction = this.metabolicLstm.ingestVitalSigns(sample, this.lastState);
+            if (!prediction)
+                return;
+            const gradient = this.metabolicLstm.getLastGradient();
+            if (!gradient)
+                return;
+            void this.acuteIntervention.evaluate(prediction, gradient, sample, this.lastState);
+        }
+        catch (err) {
+            this.logger.error(`LSTM 代谢推演异常: ${err.message}`, err.stack);
+        }
+    }
+    getRecentAlerts(limit = 20) {
+        return this.acuteIntervention.getRecentAlerts(limit);
+    }
+    acknowledgeAlert(alertId) {
+        return this.acuteIntervention.acknowledgeAlert(alertId);
+    }
+    triggerTestCrisis(diverId) {
+        this.logger.warn(`⚠️ 手动触发急性 CO2 中毒危机测试 (diverId=${diverId ?? 'all'})`);
+        this.serial.simulator?.triggerAcuteCo2Crisis?.(diverId);
+    }
 };
 exports.BiochemicalEngineService = BiochemicalEngineService;
 exports.BiochemicalEngineService = BiochemicalEngineService = __decorate([
@@ -239,6 +291,8 @@ exports.BiochemicalEngineService = BiochemicalEngineService = __decorate([
         multi_channel_kalman_service_1.MultiChannelKalmanFilter,
         lock_free_ring_buffer_service_1.LockFreeRingBuffer,
         sensor_aggregator_service_1.SensorAggregatorService,
-        diffusion_grid_service_1.DiffusionGridService])
+        diffusion_grid_service_1.DiffusionGridService,
+        metabolic_lstm_service_1.MetabolicLstmService,
+        acute_intervention_service_1.AcuteInterventionService])
 ], BiochemicalEngineService);
 //# sourceMappingURL=biochemical-engine.service.js.map

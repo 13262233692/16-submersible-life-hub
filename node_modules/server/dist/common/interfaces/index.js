@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./sensor.interface"), exports);
 __exportStar(require("./biochemical.interface"), exports);
 __exportStar(require("./gas-control.interface"), exports);
+__exportStar(require("./auricular.interface"), exports);
 //# sourceMappingURL=index.js.map

@@ -59,6 +59,7 @@ let BiosocketGateway = class BiosocketGateway {
             `慢客户端逐出=${BACKPRESSURE.SLOW_CLIENT_EVICT_MS}ms`);
         this.engine.onBiochemicalState((s) => this.enqueueState(s));
         this.engine.onDiffusionGrid((g) => this.enqueueGrid(g));
+        this.engine.onAcuteCo2Alert((a) => this.broadcastAlert(a));
         this.watchdogTimer = setInterval(() => this.backpressureWatchdogTick(), BACKPRESSURE.WATCHDOG_INTERVAL_MS);
     }
     handleConnection(client, ..._args) {
@@ -398,6 +399,44 @@ let BiosocketGateway = class BiosocketGateway {
     getBackpressureStats() {
         return { ...this.stats };
     }
+    broadcastAlert(alert) {
+        this.logger.error(`🚨 广播急性 CO2 告警: ${alert.alertId} [${alert.severity}] ` +
+            `5min_CO2=${(alert.lstmPrediction.predictedCo2Bar5Min * 1000).toFixed(1)}mbar`);
+        const payload = {
+            alertId: alert.alertId,
+            timestamp: alert.timestamp,
+            severity: alert.severity,
+            title: alert.title,
+            message: alert.message,
+            triggeringDiverId: alert.triggeringDiverId,
+            lstmPrediction: alert.lstmPrediction,
+            gradient: alert.gradient,
+            interventionCommands: alert.interventionCommands,
+            co2CriticalBar: alert.co2CriticalBar,
+            timeToBreachSec: alert.timeToBreachSec,
+            acknowledged: alert.acknowledged,
+        };
+        for (const [clientId] of this.clients) {
+            this.server.to(clientId).volatile.emit('alert:acute_co2', payload);
+        }
+    }
+    handleAlertAck(data) {
+        const ok = this.engine.acknowledgeAlert(data.alertId);
+        if (ok) {
+            this.server.emit('alert:acknowledged', { alertId: data.alertId, at: Date.now() });
+        }
+        return { ok, alertId: data.alertId };
+    }
+    handleAlertList(data = {}) {
+        return {
+            ok: true,
+            alerts: this.engine.getRecentAlerts(data.limit ?? 20),
+        };
+    }
+    handleTriggerCrisis(data = {}) {
+        this.engine.triggerTestCrisis(data.diverId);
+        return { ok: true, at: Date.now() };
+    }
     handleSubscribeConfig(client, config) {
         const sub = this.clients.get(client.id);
         if (!sub)
@@ -453,6 +492,27 @@ __decorate([
     (0, websockets_1.WebSocketServer)(),
     __metadata("design:type", socket_io_1.Server)
 ], BiosocketGateway.prototype, "server", void 0);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('alert:acknowledge'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], BiosocketGateway.prototype, "handleAlertAck", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('alert:list'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], BiosocketGateway.prototype, "handleAlertList", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('diagnostics:trigger_crisis'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], BiosocketGateway.prototype, "handleTriggerCrisis", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('subscribe:config'),
     __param(0, (0, websockets_1.ConnectedSocket)()),

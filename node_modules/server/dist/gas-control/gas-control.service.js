@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GasControlService = void 0;
 const common_1 = require("@nestjs/common");
+const core_1 = require("@nestjs/core");
 const logger_service_1 = require("../common/logger/logger.service");
 const gas_control_interface_1 = require("../common/interfaces/gas-control.interface");
 const biochemical_engine_service_1 = require("../biochemical/biochemical-engine.service");
@@ -19,7 +20,7 @@ const biochemical_interface_1 = require("../common/interfaces/biochemical.interf
 const master_control_reporter_service_1 = require("./master-control-reporter.service");
 let GasControlService = class GasControlService {
     logger;
-    engine;
+    moduleRef;
     reporter;
     controlLoop;
     valveStates = new Map();
@@ -31,9 +32,10 @@ let GasControlService = class GasControlService {
     commandCounter = 0;
     manualOverride = false;
     lastControlCycle = 0;
-    constructor(logger, engine, reporter) {
+    _engine;
+    constructor(logger, moduleRef, reporter) {
         this.logger = logger;
-        this.engine = engine;
+        this.moduleRef = moduleRef;
         this.reporter = reporter;
         this.logger.setContext('GasControl');
         const o2Params = {
@@ -68,6 +70,12 @@ let GasControlService = class GasControlService {
         this.pressurePid = new pid_controller_service_1.PIDControllerService(pressureParams);
         this.initializeValves();
         this.initializeCalibrations();
+    }
+    get engine() {
+        if (!this._engine) {
+            this._engine = this.moduleRef.get(biochemical_engine_service_1.BiochemicalEngineService, { strict: false });
+        }
+        return this._engine;
     }
     onModuleInit() {
         this.controlLoop = setInterval(() => this.controlTick(), 200);
@@ -267,7 +275,7 @@ exports.GasControlService = GasControlService;
 exports.GasControlService = GasControlService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [logger_service_1.LoggerService,
-        biochemical_engine_service_1.BiochemicalEngineService,
+        core_1.ModuleRef,
         master_control_reporter_service_1.MasterControlReporter])
 ], GasControlService);
 //# sourceMappingURL=gas-control.service.js.map

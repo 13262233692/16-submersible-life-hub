@@ -1,4 +1,5 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { LoggerService } from '../common/logger/logger.service';
 import {
   ValveControlCommand,
@@ -28,10 +29,11 @@ export class GasControlService implements OnModuleInit, OnModuleDestroy {
   private commandCounter: number = 0;
   private manualOverride: boolean = false;
   private lastControlCycle: number = 0;
+  private _engine?: BiochemicalEngineService;
 
   constructor(
     private readonly logger: LoggerService,
-    private readonly engine: BiochemicalEngineService,
+    private readonly moduleRef: ModuleRef,
     private readonly reporter: MasterControlReporter,
   ) {
     this.logger.setContext('GasControl');
@@ -71,6 +73,13 @@ export class GasControlService implements OnModuleInit, OnModuleDestroy {
 
     this.initializeValves();
     this.initializeCalibrations();
+  }
+
+  private get engine(): BiochemicalEngineService {
+    if (!this._engine) {
+      this._engine = this.moduleRef.get(BiochemicalEngineService, { strict: false });
+    }
+    return this._engine!;
   }
 
   onModuleInit() {

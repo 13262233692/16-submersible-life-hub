@@ -101,6 +101,7 @@ export class BiosocketGateway
 
     this.engine.onBiochemicalState((s) => this.enqueueState(s));
     this.engine.onDiffusionGrid((g) => this.enqueueGrid(g));
+    this.engine.onAcuteCo2Alert((a) => this.broadcastAlert(a));
 
     this.watchdogTimer = setInterval(
       () => this.backpressureWatchdogTick(),
@@ -495,6 +496,55 @@ export class BiosocketGateway
 
   getBackpressureStats(): BackpressureStats {
     return { ...this.stats };
+  }
+
+  private broadcastAlert(alert: import('../common/interfaces/auricular.interface').AcuteCo2Alert) {
+    this.logger.error(
+      `🚨 广播急性 CO2 告警: ${alert.alertId} [${alert.severity}] ` +
+      `5min_CO2=${(alert.lstmPrediction.predictedCo2Bar5Min * 1000).toFixed(1)}mbar`,
+    );
+
+    const payload = {
+      alertId: alert.alertId,
+      timestamp: alert.timestamp,
+      severity: alert.severity,
+      title: alert.title,
+      message: alert.message,
+      triggeringDiverId: alert.triggeringDiverId,
+      lstmPrediction: alert.lstmPrediction,
+      gradient: alert.gradient,
+      interventionCommands: alert.interventionCommands,
+      co2CriticalBar: alert.co2CriticalBar,
+      timeToBreachSec: alert.timeToBreachSec,
+      acknowledged: alert.acknowledged,
+    };
+
+    for (const [clientId] of this.clients) {
+      this.server.to(clientId).volatile.emit('alert:acute_co2', payload);
+    }
+  }
+
+  @SubscribeMessage('alert:acknowledge')
+  handleAlertAck(@MessageBody() data: { alertId: string }) {
+    const ok = this.engine.acknowledgeAlert(data.alertId);
+    if (ok) {
+      this.server.emit('alert:acknowledged', { alertId: data.alertId, at: Date.now() });
+    }
+    return { ok, alertId: data.alertId };
+  }
+
+  @SubscribeMessage('alert:list')
+  handleAlertList(@MessageBody() data: { limit?: number } = {}) {
+    return {
+      ok: true,
+      alerts: this.engine.getRecentAlerts(data.limit ?? 20),
+    };
+  }
+
+  @SubscribeMessage('diagnostics:trigger_crisis')
+  handleTriggerCrisis(@MessageBody() data: { diverId?: number } = {}) {
+    this.engine.triggerTestCrisis(data.diverId);
+    return { ok: true, at: Date.now() };
   }
 
   @SubscribeMessage('subscribe:config')

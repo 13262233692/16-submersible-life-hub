@@ -7,6 +7,12 @@ import { SensorAggregatorService } from './sensor-aggregator.service';
 import { DiffusionGridService } from './diffusion-grid.service';
 import { DecodedSensorData, SensorType } from '../common/interfaces/sensor.interface';
 import { BiochemicalState, GasDiffusionGrid } from '../common/interfaces/biochemical.interface';
+import {
+  AcuteCo2Alert,
+  VitalSignsSample,
+} from '../common/interfaces/auricular.interface';
+import { MetabolicLstmService } from '../metabolic/metabolic-lstm.service';
+import { AcuteInterventionService } from '../metabolic/acute-intervention.service';
 
 export interface EngineDiagnostics {
   computeLatencyMs: number;
@@ -43,6 +49,8 @@ export class BiochemicalEngineService implements OnModuleInit, OnModuleDestroy {
   private skippedGridTicks: number = 0;
   private totalSkippedGrids: number = 0;
 
+  private alertListeners: Array<(a: AcuteCo2Alert) => void> = [];
+
   constructor(
     private readonly logger: LoggerService,
     private readonly serial: SerialService,
@@ -50,6 +58,8 @@ export class BiochemicalEngineService implements OnModuleInit, OnModuleDestroy {
     private readonly ringBuffer: LockFreeRingBuffer<FilteredSensorReading>,
     private readonly aggregator: SensorAggregatorService,
     private readonly diffusion: DiffusionGridService,
+    private readonly metabolicLstm: MetabolicLstmService,
+    private readonly acuteIntervention: AcuteInterventionService,
   ) {
     this.logger.setContext('BiochemicalEngine');
   }
@@ -61,6 +71,17 @@ export class BiochemicalEngineService implements OnModuleInit, OnModuleDestroy {
         this.onSensorFrame(frame as DecodedSensorData);
       }
     });
+
+    (this.serial as any).on('vitalSigns', (sample: VitalSignsSample) => {
+      this.onVitalSigns(sample);
+    });
+
+    this.acuteIntervention.on('alert' as any, (alert: AcuteCo2Alert) => {
+      for (const l of this.alertListeners) {
+        try { l(alert); } catch { /* ignore */ }
+      }
+    });
+
     this.scheduleComputeLoop();
     this.scheduleGridLoop();
     this.engineStarted = true;
@@ -181,6 +202,14 @@ export class BiochemicalEngineService implements OnModuleInit, OnModuleDestroy {
     };
   }
 
+  onAcuteCo2Alert(listener: (a: AcuteCo2Alert) => void): () => void {
+    this.alertListeners.push(listener);
+    return () => {
+      const idx = this.alertListeners.indexOf(listener);
+      if (idx >= 0) this.alertListeners.splice(idx, 1);
+    };
+  }
+
   getCurrentState(): BiochemicalState | null {
     return this.lastState || null;
   }
@@ -243,5 +272,37 @@ export class BiochemicalEngineService implements OnModuleInit, OnModuleDestroy {
   getLatestReadings(): Record<string, FilteredSensorReading | null> {
     void SensorType;
     return {};
+  }
+
+  private onVitalSigns(sample: VitalSignsSample) {
+    if (!this.lastState) return;
+
+    try {
+      const prediction = this.metabolicLstm.ingestVitalSigns(sample, this.lastState);
+      if (!prediction) return;
+
+      const gradient = this.metabolicLstm.getLastGradient();
+      if (!gradient) return;
+
+      void this.acuteIntervention.evaluate(prediction, gradient, sample, this.lastState);
+    } catch (err) {
+      this.logger.error(
+        `LSTM 代谢推演异常: ${(err as Error).message}`,
+        (err as Error).stack,
+      );
+    }
+  }
+
+  getRecentAlerts(limit: number = 20): AcuteCo2Alert[] {
+    return this.acuteIntervention.getRecentAlerts(limit);
+  }
+
+  acknowledgeAlert(alertId: string): boolean {
+    return this.acuteIntervention.acknowledgeAlert(alertId);
+  }
+
+  triggerTestCrisis(diverId?: number): void {
+    this.logger.warn(`⚠️ 手动触发急性 CO2 中毒危机测试 (diverId=${diverId ?? 'all'})`);
+    (this.serial as any).simulator?.triggerAcuteCo2Crisis?.(diverId);
   }
 }

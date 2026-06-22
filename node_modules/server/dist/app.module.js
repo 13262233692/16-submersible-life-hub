@@ -19,6 +19,7 @@ const gas_control_module_1 = require("./gas-control/gas-control.module");
 const biosocket_module_1 = require("./biosocket/biosocket.module");
 const api_module_1 = require("./api/api.module");
 const shared_module_1 = require("./common/shared/shared.module");
+const metabolic_module_1 = require("./metabolic/metabolic.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,6 +33,7 @@ exports.AppModule = AppModule = __decorate([
             ring_buffer_module_1.RingBufferModule,
             biochemical_module_1.BiochemicalModule,
             gas_control_module_1.GasControlModule,
+            metabolic_module_1.MetabolicModule,
             biosocket_module_1.BiosocketModule,
             api_module_1.ApiModule,
         ],

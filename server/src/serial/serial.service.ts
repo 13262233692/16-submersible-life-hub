@@ -2,16 +2,25 @@ import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { EventEmitter } from 'events';
 import { LoggerService } from '../common/logger/logger.service';
 import { SENSOR_FRAME_CONFIG, DecodedSensorData, RawSensorFrame } from '../common/interfaces/sensor.interface';
+import {
+  AuricularRawFrame,
+  DecodedAuricularData,
+  VitalSignsSample,
+} from '../common/interfaces/auricular.interface';
 import { FrameDecoderService } from './frame-decoder.service';
+import { AuricularDecoderService } from './auricular-decoder.service';
 import { SimulatorService } from './simulator.service';
 
 export type SerialEvents = {
   rawData: (buf: Buffer) => void;
   frameDecoded: (frame: RawSensorFrame | DecodedSensorData) => void;
+  auricularFrame: (frame: AuricularRawFrame | DecodedAuricularData | VitalSignsSample) => void;
+  vitalSigns: (sample: VitalSignsSample) => void;
   error: (err: Error) => void;
   open: () => void;
   close: () => void;
   reconnect: (attempt: number) => void;
+  crisis: (data: { timestamp: number; type: string }) => void;
 };
 
 interface SerialPortLike {
@@ -63,6 +72,7 @@ export class SerialService extends (EventEmitter as unknown as new () => {
   constructor(
     private readonly logger: LoggerService,
     private readonly frameDecoder: FrameDecoderService,
+    private readonly auricularDecoder: AuricularDecoderService,
     private readonly simulator: SimulatorService,
   ) {
     super();
@@ -113,11 +123,13 @@ export class SerialService extends (EventEmitter as unknown as new () => {
 
   private attachSimulator() {
     this.simulator.on('data', this.boundSimulatorData);
+    this.simulator.on('crisis:start', (d) => this.emit('crisis', d));
   }
 
   private detachSimulator() {
     try {
       this.simulator.off('data', this.boundSimulatorData);
+      this.simulator.removeAllListeners('crisis:start');
     } catch {
       /* ignore */
     }
@@ -282,6 +294,16 @@ export class SerialService extends (EventEmitter as unknown as new () => {
       const frameAny = frame as unknown as Record<string, unknown>;
       frameAny.frameId = this.frameCounter;
       this.emit('frameDecoded', frame);
+    }
+
+    const auricularFrames = this.auricularDecoder.consumeBuffer(buffer);
+    for (const frame of auricularFrames) {
+      this.frameCounter++;
+      this.emit('auricularFrame', frame);
+
+      if ('pulseBpm' in frame && 'spo2Percent' in frame) {
+        this.emit('vitalSigns', frame as VitalSignsSample);
+      }
     }
 
     if (this.frameCounter % 10000 === 0) {
